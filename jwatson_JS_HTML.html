@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="jquery-1.11.2.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#btnSubmit').click(function () {
+				var reqweather = $('#txtZip').val() + ',' + 'us';
+				var rspweather = $('weatherDiv');
+				$.ajax({
+					url: 'http://api.openweathermap.org/data/2.5/weather',
+					method: 'get',
+					data: {q: reqweather},
+					dataType: 'json',
+					success: function (data) {
+						if (data.message != null)
+						{
+							rspweather.html(data.message);
+						}
+						else
+						{
+							rspweather.html(data.main);
+						}
+					}
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>Zip</td>
+			<td><input type="text" id="txtZip"/></td>
+		</tr>
+	</table>
+	<input type="button" id="btnSubmit" value="Get Weather Data">
+	<br/>
+	<div id="weatherDiv">
+	</div>
+</body>
+</html>
+<!-- http://openweathermap.org/current -->
