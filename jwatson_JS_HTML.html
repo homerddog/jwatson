@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="jquery-1.11.2.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#btnSubmit').click(function () {
 				var reqweather = $('#txtZip').val() + ',' + 'us';
-				var rspweather = $('#weatherDiv');
+				var rspweather = $('weatherDiv');
 				$.ajax({
 					url: 'http://api.openweathermap.org/data/2.5/weather',
 					method: 'get',
-					data: {q: reqweather, appId: '<insert API key here>'},
+					data: {q: reqweather},
 					dataType: 'json',
 					success: function (data) {
-						rspweather.html(JSON.stringify(data));
-					},
-					error: function (error) {
-						rspweather.html(error.responseText);
+						if (data.message != null)
+						{
+							rspweather.html(data.message);
+						}
+						else
+						{
+							rspweather.html(data.main);
+						}
 					}
 				});
 			});
